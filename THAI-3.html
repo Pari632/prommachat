@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คำนวณตำราพรหมชาติ</title>
+<style>
+  body { font-family: sans-serif; text-align: center; }
+  .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; }
+  input, button { margin: 5px; padding: 10px; width: 100%; }
+  #result { margin-top: 15px; padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; }
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body>
+  <div class="container">
+    <h2>ตำราพรหมชาติ 12 นักษัตร</h2>
+    <label for="age">กรอกอายุ:</label>
+    <input type="number" id="age" min="1" required>
+
+    <label>เลือกเพศ:</label>
+    <input type="radio" name="gender" value="male" checked> ชาย
+    <input type="radio" name="gender" value="female"> หญิง<br>
+
+    <button onClick="calculateFate()">ทำนาย</button>
+    <button onClick="resetForm()">รีเซ็ต</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateFate() {
+      let age = parseInt(document.getElementById("age").value);
+      let gender = document.querySelector('input[name="gender"]:checked').value;
+      let resultDiv = document.getElementById("result");
+
+      if (!age || age < 1) {
+        alert("กรุณากรอกอายุให้ถูกต้อง");
+        return;
+      }
+
+      const fates = [
+        "เจดีย์ - ชีวิตราบรื่น มีความสุข",
+        "ฉัตรเงิน - เจริญก้าวหน้า โชคลาภเงินทอง",
+        "คนคอขาด - ระวังความเดือดร้อน เสียทรัพย์",
+        "เรือนหลวง - มีผู้ใหญ่ช่วยเหลือ การงานรุ่งเรือง",
+        "ปราสาท - พบคู่รัก กิจการรุ่งเรือง",
+        "ราหู - ระวังปัญหาทางคำพูด และการเงิน",
+        "ฉัตรทอง - มั่งคั่ง เงินทองมากมาย",
+        "เทวดาขี่เต่า - มีโชคลาภเล็กน้อย ต้องรอบคอบ",
+        "คนต้องขื่อคา - มีเคราะห์ ระวังปัญหาครอบครัว",
+        "พ่อหมอ - ผู้ใหญ่อุปถัมภ์ ค้าขายดี",
+        "แม่มด - ได้รับการสนับสนุนจากหัวหน้า",
+        "นาคราช - ระวังอุบัติเหตุ และคนไม่หวังดี"
+      ];
+
+      let index = (gender === "male") ? (age - 1) % 12 : (13 - (age % 12)) % 12;
+      resultDiv.innerHTML = `คุณตกที่นั่ง <strong>${fates[index]}</strong>`;
+    }
+
+    function resetForm() {
+      document.getElementById("age").value = "";
+      document.getElementById("result").innerHTML = "";
+    }
+  </script>
+</body>
+</html>
